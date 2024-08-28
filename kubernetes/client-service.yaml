@@ -1,13 +1,15 @@
 apiVersion: v1
-kind: Service
+kind: Service 
 metadata:
   name: client-srv
 spec:
   selector:
-    app: clinet-service
+    app: client-service
 
   ports:
     - protocol: TCP
-      port: 4001
-      targetPort: 4001
+      port: 3000       #Le port sur lequel le service sera accessible 
+      targetPort: 80   #Le port sur lequel votre conteneur écoute 
   type: ClusterIP
+
+

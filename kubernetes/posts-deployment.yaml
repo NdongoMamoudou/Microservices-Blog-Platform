@@ -7,7 +7,8 @@ kind: Deployment
 # Définit des informations sur la ressource (nom, labels, ...)
 metadata:
 # Nom du Deployment, utilisé pour identifier cette ressource dans le cluster
-  name: event-bus-srv
+  name: posts-clusterip-srv
+
 spec:
  # Nombre de Pods lancés
   replicas: 3
@@ -15,16 +16,16 @@ spec:
   # Cibler les Pods à lancer
   selector:
     matchLabels:
-      app: event-bus-service
+      app: posts-clusterip-service
 
  # Modèle de Pod utilisé pour créer les Pods     
   template:
     metadata:
       labels:
-        app: event-bus-service
+        app: posts-clusterip-service
     spec:
       containers:
-      - name: event-bus-service    #Nom du conteneur à l'intérieur du Pod
-        image: myapp-event_bus
+      - name: posts-clusterip-service    #Nom du conteneur à l'intérieur du Pod
+        image: myapp_poste
         ports:
-        - containerPort: 4005
+        - containerPort: 4000

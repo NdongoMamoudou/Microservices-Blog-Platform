@@ -1,18 +1,23 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: client-service-ingress
+  name: query-service-ingress
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
+
 spec:
   rules:
   - host: yourdomain.com
     http:
       paths:
-      - path: /?(.*)
-        pathType: ImplementationSpecific
+      - path: /posts
+        pathType: Prefix
         backend:
           service:
-            name: client-srv  # Nom du service Kubernetes
+            name: query-srv
             port:
-              number: 3000  # Port sur lequel le service écoute
+              number: 4002
+
+
+
+
