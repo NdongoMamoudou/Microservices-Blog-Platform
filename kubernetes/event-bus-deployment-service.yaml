@@ -7,8 +7,7 @@ kind: Deployment
 # Définit des informations sur la ressource (nom, labels, ...)
 metadata:
 # Nom du Deployment, utilisé pour identifier cette ressource dans le cluster
-  name: posts-clusterip-srv
-
+  name: event-bus-srv
 spec:
  # Nombre de Pods lancés
   replicas: 3
@@ -16,17 +15,35 @@ spec:
   # Cibler les Pods à lancer
   selector:
     matchLabels:
-      app: posts-clusterip-service
+      app: event-bus-service
 
  # Modèle de Pod utilisé pour créer les Pods     
   template:
     metadata:
       labels:
-        app: posts-clusterip-service
+        app: event-bus-service
     spec:
       containers:
-      - name: posts-clusterip-service    #Nom du conteneur à l'intérieur du Pod
-        image: posts
+      - name: event-bus-service    #Nom du conteneur à l'intérieur du Pod
+        image: event_bus
         imagePullPolicy: Never  # Indique à Kubernetes de ne pas récupérer l'image
         ports:
-        - containerPort: 4000
+        - containerPort: 4005
+
+---
+
+
+#Service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-bus-srv
+spec:
+  selector:
+    app: event-bus-service
+  ports:
+    - protocol: TCP
+      port: 4005
+      targetPort: 4005
+  type: ClusterIP

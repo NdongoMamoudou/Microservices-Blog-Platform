@@ -1,3 +1,6 @@
+
+#Deployment
+
 # Version de l'API Kubernete
 apiVersion: apps/v1
 
@@ -7,7 +10,7 @@ kind: Deployment
 # Définit des informations sur la ressource (nom, labels, ...)
 metadata:
 # Nom du Deployment, utilisé pour identifier cette ressource dans le cluster
-  name: query-srv
+  name: moderation-srv
 
 spec:
  # Nombre de Pods lancés
@@ -16,17 +19,44 @@ spec:
   # Cibler les Pods à lancer
   selector:
     matchLabels:
-      app: query-service
+      app: moderation-service
 
  # Modèle de Pod utilisé pour créer les Pods     
   template:
     metadata:
       labels:
-        app: query-service
+        app: moderation-service
     spec:
       containers:
-      - name: query-service    #Nom du conteneur à l'intérieur du Pod
-        image: query
+      - name: moderation-service    #Nom du conteneur à l'intérieur du Pod
+        image: moderation
         imagePullPolicy: Never  # Indique à Kubernetes de ne pas récupérer l'image
         ports:
-        - containerPort: 4002
+        - containerPort: 4003
+
+
+
+
+
+
+
+
+---
+
+
+
+#Service
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: moderation-srv
+spec:
+  selector:
+    app: moderation-service
+  ports:
+    - protocol: TCP
+      port: 4003
+      targetPort: 4003
+  type: ClusterIP
