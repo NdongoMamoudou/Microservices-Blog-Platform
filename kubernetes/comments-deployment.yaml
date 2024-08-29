@@ -26,6 +26,7 @@ spec:
     spec:
       containers:
       - name: comments-service    #Nom du conteneur à l'intérieur du Pod
-        image: myapp
+        image: comments
+        imagePullPolicy: Never  # Indique à Kubernetes de ne pas récupérer l'image
         ports:
         - containerPort: 4001

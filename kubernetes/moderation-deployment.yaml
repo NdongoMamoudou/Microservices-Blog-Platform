@@ -26,6 +26,7 @@ spec:
     spec:
       containers:
       - name: moderation-service    #Nom du conteneur à l'intérieur du Pod
-        image: myapp_moderation
+        image: moderation
+        imagePullPolicy: Never  # Indique à Kubernetes de ne pas récupérer l'image
         ports:
         - containerPort: 4003

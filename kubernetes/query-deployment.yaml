@@ -26,6 +26,7 @@ spec:
     spec:
       containers:
       - name: query-service    #Nom du conteneur à l'intérieur du Pod
-        image: myapp_query
+        image: query
+        imagePullPolicy: Never  # Indique à Kubernetes de ne pas récupérer l'image
         ports:
         - containerPort: 4002

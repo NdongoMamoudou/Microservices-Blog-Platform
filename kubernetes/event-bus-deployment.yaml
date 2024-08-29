@@ -25,6 +25,7 @@ spec:
     spec:
       containers:
       - name: event-bus-service    #Nom du conteneur à l'intérieur du Pod
-        image: myapp-event_bus
+        image: event_bus
+        imagePullPolicy: Never  # Indique à Kubernetes de ne pas récupérer l'image
         ports:
         - containerPort: 4005

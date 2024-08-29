@@ -7,10 +7,10 @@ metadata:
 
 spec:
   rules:
-  - host: yourdomain.com
+  - host: localhost
     http:
       paths:
-      - path: /posts/.*/comments
+      - path: /posts/?(.*)/comments
         pathType: Prefix
         backend:
           service:
