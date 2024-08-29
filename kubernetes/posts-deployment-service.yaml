@@ -13,7 +13,7 @@ metadata:
   name: posts-clusterip-srv
 
 spec:
- # Nombre de Pods lancés
+  # Nombre de Pods lancés
   replicas: 3
 
   # Cibler les Pods à lancer
@@ -21,7 +21,7 @@ spec:
     matchLabels:
       app: posts-clusterip-service
 
- # Modèle de Pod utilisé pour créer les Pods     
+  # Modèle de Pod utilisé pour créer les Pods     
   template:
     metadata:
       labels:
