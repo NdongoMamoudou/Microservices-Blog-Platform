@@ -96,7 +96,12 @@ Si vous modifiez ces ports, assurez-vous également de mettre à jour les réfé
 1. Construisez les images Docker pour chaque service :
     ```bash
     docker build -t client ./client
-    docker build -t posts ./posts
+    doc ker build -t posts ./posts 
+    docker build -t query ./query
+    docker build -t comments ./comments
+    docker build -t moderation ./moderation
+    docker build -t event-bus ./event-bus
+    
     # Répétez pour tous les services
     ```
     Le projet est basé sur l'image **node:alpine**
@@ -105,3 +110,29 @@ Si vous modifiez ces ports, assurez-vous également de mettre à jour les réfé
     ```bash
     kubectl apply -f k8s/
     ```
+
+    Deploiement manuel des pods
+
+    - kubectl apply -f ./kubernetes/posts-deployment-service.yaml 
+    - kubectl apply -f ./kubernetes/posts-ingress.yaml 
+
+    - kubectl apply -f ./kubernetes/event-bus-deployment-service.yaml 
+
+    - kubectl apply -f ./kubernetes/comments-deployment-service.yaml
+
+    - kubectl apply -f ./kubernetes/query-deployment-service.yaml
+
+    - kubectl apply -f ./kubernetes/moderation-deployment-service.yaml
+
+
+
+
+
+3. 
+
+docker build -t client ./client
+
+4. Force reload
+
+kubectl rollout restart deployment client-srv
+kubectl rollout restart deployment posts-clusterip-srv
