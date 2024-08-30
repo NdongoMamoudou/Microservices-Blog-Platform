@@ -1,52 +1,35 @@
 # Deployment 
 
 
-# Version de l'API Kubernete
 apiVersion: apps/v1
-
-# Sélectionner le type de ressource qu'on déploie
 kind: Deployment
-
-# Définit des informations sur la ressource (nom, labels, ...)
 metadata:
-# Nom du Deployment, utilisé pour identifier cette ressource dans le cluster
   name: posts-clusterip-srv
-
 spec:
- # Nombre de Pods lancés
   replicas: 3
-
-  # Cibler les Pods à lancer
   selector:
     matchLabels:
       app: posts-clusterip-service
-
- # Modèle de Pod utilisé pour créer les Pods     
   template:
     metadata:
       labels:
         app: posts-clusterip-service
     spec:
       containers:
-      - name: posts-clusterip-service    #Nom du conteneur à l'intérieur du Pod
+      - name: posts-clusterip-service
         image: posts
-        imagePullPolicy: Never  # Indique à Kubernetes de ne pas récupérer l'image
+        imagePullPolicy: Never
         ports:
         - containerPort: 4000
 
-
-
 ---
 
-
-#Service 
-
+#Service
 
 apiVersion: v1
 kind: Service
 metadata:
   name: posts-clusterip-srv
-
 spec:
   selector:
     app: posts-clusterip-service

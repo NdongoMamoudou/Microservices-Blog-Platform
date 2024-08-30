@@ -1,11 +1,56 @@
+# Ingress pour le service client
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: all-services-ingress
+  name: client-service-ingress
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /?(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: client-srv
+            port:
+              number: 3000
+
+---
+# Ingress pour le service comments
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: comments-service-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /posts/?(.*)/comments
+        pathType: Prefix
+        backend:
+          service:
+            name: comments-srv
+            port:
+              number: 4001
+
+---
+# Ingress pour le service posts
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: posts-clusterip-service-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
   rules:
   - host: localhost
     http:
@@ -18,14 +63,20 @@ spec:
             port:
               number: 4000
 
-      - path: /posts/(?<postId>[^/]+)/comments
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: comments-srv
-            port:
-              number: 4001
-
+---
+# Ingress pour le service query
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: query-service-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: localhost
+    http:
+      paths:
       - path: /posts
         pathType: Prefix
         backend:
@@ -33,11 +84,3 @@ spec:
             name: query-srv
             port:
               number: 4002
-
-      - path: /?(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: client-srv
-            port:
-              number: 3000
