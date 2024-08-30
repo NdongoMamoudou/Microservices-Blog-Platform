@@ -14,7 +14,7 @@ metadata:
 
 spec:
  # Nombre de Pods lancés
-  replicas: 3
+  replicas: 1
 
   # Cibler les Pods à lancer
   selector:

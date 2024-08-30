@@ -6,7 +6,7 @@ kind: Deployment
 metadata:
   name: posts-clusterip-srv
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: posts-clusterip-service
