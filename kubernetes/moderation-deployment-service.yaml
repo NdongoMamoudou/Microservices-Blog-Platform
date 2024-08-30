@@ -13,7 +13,7 @@ metadata:
   name: moderation-srv
 
 spec:
- # Nombre de Pods lancés
+  # Nombre de Pods lancés
   replicas: 3
 
   # Cibler les Pods à lancer
@@ -21,7 +21,7 @@ spec:
     matchLabels:
       app: moderation-service
 
- # Modèle de Pod utilisé pour créer les Pods     
+  # Modèle de Pod utilisé pour créer les Pods     
   template:
     metadata:
       labels:
@@ -31,6 +31,10 @@ spec:
       - name: moderation-service    #Nom du conteneur à l'intérieur du Pod
         image: moderation
         imagePullPolicy: Never  # Indique à Kubernetes de ne pas récupérer l'image
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
         ports:
         - containerPort: 4003
 

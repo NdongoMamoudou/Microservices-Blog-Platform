@@ -9,7 +9,7 @@ metadata:
 # Nom du Deployment, utilisé pour identifier cette ressource dans le cluster
   name: event-bus-srv
 spec:
- # Nombre de Pods lancés
+  # Nombre de Pods lancés
   replicas: 3
 
   # Cibler les Pods à lancer
@@ -17,7 +17,7 @@ spec:
     matchLabels:
       app: event-bus-service
 
- # Modèle de Pod utilisé pour créer les Pods     
+  # Modèle de Pod utilisé pour créer les Pods     
   template:
     metadata:
       labels:
@@ -25,8 +25,15 @@ spec:
     spec:
       containers:
       - name: event-bus-service    #Nom du conteneur à l'intérieur du Pod
-        image: event_bus
+        image: event-bus
         imagePullPolicy: Never  # Indique à Kubernetes de ne pas récupérer l'image
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
         ports:
         - containerPort: 4005
 
@@ -40,10 +47,10 @@ kind: Service
 metadata:
   name: event-bus-srv
 spec:
+  type: ClusterIP
   selector:
     app: event-bus-service
   ports:
     - protocol: TCP
       port: 4005
       targetPort: 4005
-  type: ClusterIP

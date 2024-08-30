@@ -12,7 +12,7 @@ metadata:
   name: comments-srv
 
 spec:
- # Nombre de Pods lancés
+  # Nombre de Pods lancés
   replicas: 3
 
   # Cibler les Pods à lancer
@@ -20,7 +20,7 @@ spec:
     matchLabels:
       app: comments-service
 
- # Modèle de Pod utilisé pour créer les Pods     
+  # Modèle de Pod utilisé pour créer les Pods     
   template:
     metadata:
       labels:
@@ -32,6 +32,13 @@ spec:
         imagePullPolicy: Never  # Indique à Kubernetes de ne pas récupérer l'image
         ports:
         - containerPort: 4001
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.1"
+            memory: "256Mi"
 
 ---
 # Définition du Service

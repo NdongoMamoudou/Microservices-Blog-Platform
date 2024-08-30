@@ -6,20 +6,7 @@ const axios = require("axios");
 
 const app = express();
 app.use(bodyParser.json());
-
-
-app.use(cors(
-
-  {
-    origin: 'http://localhost:3000',  // Frontend URL
-    credentials: true,
-    methods: ['GET', 'POST', 'OPTIONS'],  // Ensure OPTIONS is allowed for preflight requests
-    allowedHeaders: ['Content-Type', 'Authorization'],  // Include any headers that your frontend is sending
-    optionsSuccessStatus: 200,
-  }
-
-));
-
+app.use(cors());
 
 const posts = {};
 

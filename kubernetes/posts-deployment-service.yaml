@@ -33,6 +33,13 @@ spec:
         imagePullPolicy: Never  # Indique à Kubernetes de ne pas récupérer l'image
         ports:
         - containerPort: 4000
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.1"
+            memory: "256Mi"
 
 
 
