@@ -1,0 +1,47 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+metadata:
+  name: projet-fil-rouge
+build:
+  artifacts:
+    - image: client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+    - image: posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+    - image: query
+      context: query
+      docker:
+        dockerfile: Dockerfile
+    - image: comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+    - image: moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+    - image: event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+      - kubernetes/client-deployment-service.yaml
+      - kubernetes/comments-deployment-service.yaml
+      - kubernetes/event-bus-deployment-service.yaml
+      - kubernetes/moderation-deployment-service.yaml
+      - kubernetes/posts-deployment-service.yaml
+      - kubernetes/query-deployment-service.yaml
+      - kubernetes/ingress.yaml  # Ce fichier contient les règles Ingress pour tous les services
+portForward:
+  - resourceType: service
+    resourceName: client-srv
+    namespace: default
+    port: 3000
+    address: 127.0.0.1
+    localPort: 3000
